@@ -1,0 +1,14 @@
+{
+  "name": "rightmove_scrape",
+  "module": "scrape.js",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "puppeteer": "^22.5.0"
+  }
+}
