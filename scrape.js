@@ -1,5 +1,10 @@
 //URL = 'https://www.rightmove.co.uk/property-to-rent/find.html?searchType=RENT&locationIdentifier=REGION%5E94019&insId=1&radius=0.25&minPrice=&maxPrice=&minBedrooms=&maxBedrooms=&displayPropertyType=&maxDaysSinceAdded=&sortByPriceDescending=&_includeLetAgreed=on&primaryDisplayPropertyType=&secondaryDisplayPropertyType=&oldDisplayPropertyType=&oldPrimaryDisplayPropertyType=&letType=&letFurnishType=&houseFlatShare='
 
+// Error handling: network changes, IP address blocks, changes in website structure
+// Implement rate limiting
+// Navigate multiple pages on one
+
+
 //adding Puppeteer library
 import { launch } from 'puppeteer';
 launch().then(async browser => {
@@ -16,3 +21,6 @@ path: 'browserstack-demo.png'
 //browser close
 await browser.close()
 })
+
+
+// Periodic scrapes - daily
