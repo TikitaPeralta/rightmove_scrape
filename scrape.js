@@ -3,6 +3,7 @@
 // Error handling: network changes, IP address blocks, changes in website structure
 // Implement rate limiting
 // Navigate multiple pages on one
+//
 
 
 //adding Puppeteer library
