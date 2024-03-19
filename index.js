@@ -1,15 +1,10 @@
 // Import mainArea data
 import scrapeSite from './scrape.js';
-// console.log(scrapeSite);
-// const scrapeSite = require('./scrape.js');
-// const fs = require('fs');
 
 scrapeSite()
   .then(mainArea => {
     console.log(mainArea);
-    // Requiring fs module in which
-    // writeFile function is defined.
-    Bun.write('output.txt', mainArea)
+    
   })
   .catch(error => {
     console.error('Error scraping site:', error);

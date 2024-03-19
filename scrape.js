@@ -16,7 +16,7 @@ const scrapeSite = async () => {
     await p.goto('https://www.rightmove.co.uk/property-to-rent/find.html?searchType=RENT&locationIdentifier=REGION%5E94019&insId=1&radius=0.25&minPrice=&maxPrice=&minBedrooms=&maxBedrooms=&displayPropertyType=&maxDaysSinceAdded=&sortByPriceDescending=&_includeLetAgreed=on&primaryDisplayPropertyType=&secondaryDisplayPropertyType=&oldDisplayPropertyType=&oldPrimaryDisplayPropertyType=&letType=&letFurnishType=&houseFlatShare=', { waitUntil: 'networkidle0' })
     const mainArea =  await p.$eval('.l-propertySearch-main .l-propertySearch-results .l-searchResults', el => el.innerText);
     await browser.close()
-    console.log("Main area", mainArea)
+    // console.log("Main area", mainArea)
     return mainArea
 }
 // Export mainArea data
