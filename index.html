@@ -2,11 +2,10 @@
 <html>
 <head>
     <title>Rightmove Scrape</title>
-    <link rel="icon" type="image/x-icon" href="./DALL·E 2024-01-20 18.52.10 - A plain flower in a slightly lighter shade of red, simple and unadorned. The flower should be depicted in a minimalist style, isolated on a transparen.png">
+    <!-- <link rel="icon" type="image/x-icon" href="./DALL·E 2024-01-20 18.52.10 - A plain flower in a slightly lighter shade of red, simple and unadorned. The flower should be depicted in a minimalist style, isolated on a transparen.png"> -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
-    <link rel="reset" href="./reset.css">
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">    <link rel="reset" href="./reset.css">
     <link rel="stylesheet" href="./style.css">
     <script
     src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
@@ -14,19 +13,85 @@
 </head>
 <body>
     <main>
-        <header></header>
-        <form></form>
+        <header>
+            <a href="#" target="_blank">Home</a>
+            <a href="#" target="_blank">Contact</a>
+        </header>
+        <div id="info">
+            <h1>Rightmove Scrape</h1>
+            <p>Choose a city and radius. A graph will be constructed from Rightmove data on properties within this area for price and number of bathrooms.</p>
+        </div>
+        <form>
+            <div class="sect">
+                <label for="fname">City</label>
+                <input type="text" id="fname" name="fname">
+            </div>
+            <div class="sect">
+                <label for="fname">Radius</label>
+                <div class="slidecontainer">
+                    <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
+                    <p><span id="demo"></span>km</p>
+                </div>
+            </div>
+            <input type="submit" value="Submit" id="btn">
+        </form>
         <div id="graphArea">
-            <canvas id="myChart" style="width:100%;max-width:700px"></canvas><div>
-        <footer></footer>
+            <canvas id="myChart" style="width:100%;max-width:700px"></canvas>
+        </div>
+        <footer>
+            <a href="#" target="_blank">GitHub ReadMe</a>
+            <a href="#" target="_blank">Web Scraping Services</a>
+            <a href="#" target="_blank">TikitaTech</a>
+        </footer>
     </main>
 
 <script>
     const myChart = new Chart("myChart", {
         type: "scatter",
         data: {},
-        options: {}
+        options: {
+            scales: {
+            xAxes: [{
+                scaleLabel: {
+                    display: true,
+                    labelString: 'price', // X-axis title
+                    fontColor: 'white' // X-axis title color
+                },
+                ticks: {
+                    fontColor: 'white' // Change the x-axis labels color
+                },
+                gridLines: {
+                    color: '#ffffff' // Change the x-axis grid lines color
+                }
+            }],
+            yAxes: [{
+                scaleLabel: {
+                    display: true,
+                    labelString: 'no.of bathrooms', // X-axis title
+                    fontColor: 'white' // X-axis title color
+                },
+                ticks: {
+                    fontColor: 'white' // Change the y-axis labels color
+                },
+                gridLines: {
+                    color: '#ffffff' // Change the y-axis grid lines color
+                }
+            }]
+        },
+            title: {
+                display: true,
+                text: 'Chart.js Scatter Chart',
+                fontColor: '#ffffff'
+            }}
     });
+
+    var slider = document.getElementById("myRange");
+    var output = document.getElementById("demo");
+    output.innerHTML = slider.value;
+
+    slider.oninput = function() {
+    output.innerHTML = this.value;
+    }
 </script>
 </body>
 </html>
