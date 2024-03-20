@@ -45,28 +45,46 @@
         </footer>
     </main>
 
-<script>
-    import getProcessedDataPromise from './index.js';
+<script type="module">
+    import { getProcessedDataPromise } from '/index.js';
     const data = getProcessedDataPromise();
     console.log(data);
 
     dataPromise
         .then(processedData => {
           console.log(processedData);
+          createChart(processedData);
         })
         .catch(error => {
           console.error('Error:', error);
         });
+</script>
 
+<script>
+function createChart(data) {
+    console.log(data)
     const myChart = new Chart("myChart", {
         type: "scatter",
-        data: {},
+        data: {
+            datasets: [
+                {
+                label: 'Listings',
+                data: data.map(item => ({
+                    x: item.price,
+                    y: item.bathrooms,
+                    address: item.address, // Add the address property to each data point
+                })),
+                backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                pointRadius: 5,
+                },
+            ],
+        },
         options: {
             scales: {
             xAxes: [{
                 scaleLabel: {
                     display: true,
-                    labelString: 'price', // X-axis title
+                    labelString: 'Price', // X-axis title
                     fontColor: 'white' // X-axis title color
                 },
                 ticks: {
@@ -79,7 +97,7 @@
             yAxes: [{
                 scaleLabel: {
                     display: true,
-                    labelString: 'no.of bathrooms', // X-axis title
+                    labelString: 'No.of Bathrooms', // X-axis title
                     fontColor: 'white' // X-axis title color
                 },
                 ticks: {
@@ -94,8 +112,20 @@
                 display: true,
                 text: 'Chart.js Scatter Chart',
                 fontColor: '#ffffff'
-            }}
+            },
+            plugins: {
+                tooltip: {
+                callbacks: {
+                    label: (context) => {
+                    const dataPoint = context.dataset.data[context.dataIndex];
+                    return `Address: ${dataPoint.address}`;
+                    },
+                },
+                },
+            },
+        }
     });
+}
 
     var slider = document.getElementById("myRange");
     var output = document.getElementById("demo");
