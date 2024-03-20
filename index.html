@@ -46,6 +46,18 @@
     </main>
 
 <script>
+    import getProcessedDataPromise from './index.js';
+    const data = getProcessedDataPromise();
+    console.log(data);
+
+    dataPromise
+        .then(processedData => {
+          console.log(processedData);
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+
     const myChart = new Chart("myChart", {
         type: "scatter",
         data: {},
