@@ -1,6 +1,25 @@
 // Import mainArea data
 import scrapeSite from './scrape.js';
 
+Bun.serve({
+    port: 8080,
+    fetch(req) {
+      const url = new URL(req.url);
+      if (url.pathname === "/puppeteerdata") {
+        const data = getProcessedDataPromise();
+        const headers = {
+            'Access-Control-Allow-Origin': '*', // Allow requests from any origin
+            'Access-Control-Allow-Methods': 'GET', // Specify the allowed HTTP methods
+            'Access-Control-Allow-Headers': 'Content-Type', // Specify the allowed headers
+          };
+          return new Response(JSON.stringify(data), {
+            headers,
+          });
+      }
+      return new Response("404!");
+    },
+  });
+
 let processedData = [];
 
 function processMainArea(mainArea) {

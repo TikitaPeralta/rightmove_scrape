@@ -33,7 +33,7 @@
                     <p><span id="demo"></span>km</p>
                 </div>
             </div>
-            <input type="submit" value="Submit" id="btn">
+            <input type="button" value="Submit" id="btn">
         </form>
         <div id="graphArea">
             <canvas id="myChart" style="width:100%;max-width:700px"></canvas>
@@ -45,22 +45,27 @@
         </footer>
     </main>
 
-<script type="module">
-    import { getProcessedDataPromise } from '/index.js';
-    const data = getProcessedDataPromise();
-    console.log(data);
-
-    dataPromise
-        .then(processedData => {
-          console.log(processedData);
-          createChart(processedData);
-        })
-        .catch(error => {
-          console.error('Error:', error);
-        });
-</script>
-
 <script>
+    var submitBtn = document.getElementById('btn');
+    submitBtn.addEventListener('click', fetchData);
+
+    async function fetchData(event) {
+        event.preventDefault();
+        try {
+          const response = await fetch('http://127.0.0.1:8080/puppeteerdata');
+
+          if (response.status !== 200) {
+            console.log('Problem. Status code: ' + response.status);
+            return;
+          }
+
+          const data = await response.json();
+          createChart(data);
+        } catch (err) {
+          console.log('Fetch Error :-S', err);
+        }
+      }
+
 function createChart(data) {
     console.log(data)
     const myChart = new Chart("myChart", {
