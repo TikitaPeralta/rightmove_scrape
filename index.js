@@ -3,10 +3,11 @@ import scrapeSite from './scrape.js';
 
 Bun.serve({
     port: 8080,
-    fetch(req) {
+    async fetch(req) {
       const url = new URL(req.url);
       if (url.pathname === "/puppeteerdata") {
-        const data = getProcessedDataPromise();
+        const data = await getProcessedDataPromise();
+        console.log('data: ', data)
         const headers = {
             'Access-Control-Allow-Origin': '*', // Allow requests from any origin
             'Access-Control-Allow-Methods': 'GET', // Specify the allowed HTTP methods
@@ -42,18 +43,18 @@ function processMainArea(mainArea) {
         }
       }
     }
-  
+    console.log('processMainArea: ', processedData)
     return processedData;
   }
 
   
-  scrapeSite()
-  .then(mainArea => {
-    processedData = processMainArea(mainArea);
-  })
-  .catch(error => {
-    console.error('Error scraping site:', error);
-  });
+  // scrapeSite()
+  // .then(mainArea => {
+  //   processedData = processMainArea(mainArea);
+  // })
+  // .catch(error => {
+  //   console.error('Error scraping site:', error);
+  // });
 
 
 export function getProcessedDataPromise() {
