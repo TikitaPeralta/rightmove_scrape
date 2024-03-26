@@ -55,12 +55,16 @@ function processMainArea(mainArea) {
   // .catch(error => {
   //   console.error('Error scraping site:', error);
   // });
-
+async function createFile(results) {
+  await Bun.write("info.json", JSON.stringify(results))
+}
 
 export function getProcessedDataPromise() {
   return new Promise((resolve, reject) => {
     scrapeSite()
       .then(mainArea => {
+        console.log('straight from scrapeSite', mainArea)
+        createFile()
         const processedData = processMainArea(mainArea);
         resolve(processedData);
       })
