@@ -47,29 +47,53 @@ function processMainArea(mainArea) {
     return processedData;
   }
 
+  async function processMainArea() {
+    try {
+      // Read the contents of info.json
+      const infoJson = await Bun.file('info.json').text();
+      const data = JSON.parse(infoJson);
   
-  // scrapeSite()
-  // .then(mainArea => {
-  //   processedData = processMainArea(mainArea);
-  // })
-  // .catch(error => {
-  //   console.error('Error scraping site:', error);
-  // });
-async function createFile(results) {
-  await Bun.write("info.json", JSON.stringify(results))
-}
-
-export function getProcessedDataPromise() {
-  return new Promise((resolve, reject) => {
-    scrapeSite()
-      .then(mainArea => {
-        console.log('straight from scrapeSite', mainArea)
-        createFile()
-        const processedData = processMainArea(mainArea);
-        resolve(processedData);
-      })
-      .catch(error => {
-        reject(error);
+      // Filter the data based on some criteria
+      const filteredData = data.filter(item => {
+        // Example criteria: Keep items where 'value' is greater than 10
+        return item.value > 10;
       });
-  });
+  
+      // Create a new Blob from the filtered data
+      const filteredDataBlob = new Blob([JSON.stringify(filteredData)], { type: 'application/json' });
+  
+      // Write the filtered data to a new file
+      await Bun.write('filtered_data.json', filteredDataBlob);
+  
+      console.log('Data processing completed successfully.');
+      return true
+    } catch (error) {
+      console.error('Error processing data:', error);
+    }
+  }
+
+
+async function createFile(results) {
+    const jsonData = JSON.stringify(results);
+    const blob = new Blob([jsonData], { type: 'application/json' });
+    await Bun.write("info.json", blob);
+  }
+
+export async function getProcessedDataPromise() {
+  try {
+    const mainArea = await scrapeSite();
+    console.log('straight from scrapeSite', mainArea);
+
+    createFile();
+    console.log('written first json')
+    processMainArea();
+    console.log('filtered data json written')
+
+    const newJson = await Bun.file('filtered_data.json').text();
+    const data = JSON.parse(newJson);
+
+    return data;
+  } catch (error) {
+    throw error;
+  }
 }
